@@ -1,0 +1,9 @@
+{
+  "type": "Plugin",
+  "name": "jbcarreon123.WebNowPlayingPlugin",
+  "author": "jbcarreon123",
+  "packageId": "jbcarreon123.WebNowPlayingPlugin",
+  "version": "1.0.0",
+  "target-plugin-api-version": 30,
+  "dll": "WebNowPlaying Plugin.dll"
+  }
