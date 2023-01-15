@@ -4,6 +4,7 @@
   "author": "jbcarreon123",
   "packageId": "jbcarreon123.WebNowPlayingPlugin",
   "version": "1.0.0",
-  "target-plugin-api-version": 30,
+  "target-plugin-api-version": 35,
+  "repository" : "https://github.com/jbcarreon123/MacroDeck2-WebNowPlayingPlugin",
   "dll": "WebNowPlaying Plugin.dll"
-  }
+ }
