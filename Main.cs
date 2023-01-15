@@ -6,6 +6,7 @@ using SuchByte.MacroDeck.Plugins;
 using SuchByte.MacroDeck.Variables;
 using Fleck;
 using System.Collections.Generic;
+using SuchByte.MacroDeck.Logging;
 using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.GUI.CustomControls;
 
@@ -44,6 +45,14 @@ namespace jbcarreon123.WebNowPlayingPlugin
             OpenWS();
         }
 
+        public bool StringToBoolean(string value) {
+            if (value == "true" || Convert.ToInt32(value) >= 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         public void OpenWS()
         {
             var server = new WebSocketServer("ws://0.0.0.0:8974");
@@ -65,24 +74,26 @@ namespace jbcarreon123.WebNowPlayingPlugin
                             } else if (message.IndexOf("state", StringComparison.CurrentCultureIgnoreCase) >= 0) {
                                 VariableManager.SetValue("wnp_state", message.Replace("STATE:", ""), VariableType.Integer, PluginInstance.Main, null);
                             } else if (message.IndexOf("repeat", StringComparison.CurrentCultureIgnoreCase) >= 0) {
-                                VariableManager.SetValue("wnp_repeat", message.Replace("REPEAT:", ""), VariableType.Integer, PluginInstance.Main, null);
+                                var repeat = message.Replace("REPEAT:", "");
+                                VariableManager.SetValue("wnp_repeatall", (repeat == "2"), VariableType.Bool, PluginInstance.Main, null);
+                                VariableManager.SetValue("wnp_repeatone", (repeat == "1"), VariableType.Bool, PluginInstance.Main, null);
                             } else if (message.IndexOf("shuffle", StringComparison.CurrentCultureIgnoreCase) >= 0) {
-                                VariableManager.SetValue("wnp_shuffle", message.Replace("SHUFFLE:", ""), VariableType.Integer, PluginInstance.Main, null);
+                                VariableManager.SetValue("wnp_shuffle", StringToBoolean(message.Replace("SHUFFLE:", "")), VariableType.Bool, PluginInstance.Main, null);
                             } else if (message.IndexOf("position", StringComparison.CurrentCultureIgnoreCase) >= 0) {
                                 VariableManager.SetValue("wnp_position", message.Replace("POSITION:", ""), VariableType.String, PluginInstance.Main, null);
-                            } else if (message.IndexOf("duration", StringComparison.CurrentCultureIgnoreCase) >= 0) {
-                                VariableManager.SetValue("wnp_duration", message.Replace("DURATION:", ""), VariableType.String, PluginInstance.Main, null);
                             } else if (message.IndexOf("duration", StringComparison.CurrentCultureIgnoreCase) >= 0) {
                                 VariableManager.SetValue("wnp_duration", message.Replace("DURATION:", ""), VariableType.String, PluginInstance.Main, null);
                             }
                         }
                     };
                     socket.OnOpen = () => {
-                        socket.Send("Version:89740.5.0.0");
+                        socket.Send("Version:0.5.0.0");
                         wsclientcount++;
+                        MacroDeckLogger.Trace(PluginInstance.Main, "A websocket client was connected.");
                     };
                     socket.OnClose = () => {
                         wsclientcount--;
+                        MacroDeckLogger.Trace(PluginInstance.Main, "A websocket client was disconnected.");
                     };
                 }
             );
