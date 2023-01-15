@@ -72,9 +72,11 @@ namespace jbcarreon123.WebNowPlayingPlugin
                             } else if (message.IndexOf("volume", StringComparison.CurrentCultureIgnoreCase) >= 0) {
                                 VariableManager.SetValue("wnp_volume", message.Replace("VOLUME:", ""), VariableType.Float, PluginInstance.Main, null);
                             } else if (message.IndexOf("state", StringComparison.CurrentCultureIgnoreCase) >= 0) {
+                                VariableManager.SetValue("wnp_is_playing", (message.Replace("STATE:","") == "1"), VariableType.Bool, PluginInstance.Main, null);
                                 VariableManager.SetValue("wnp_state", message.Replace("STATE:", ""), VariableType.Integer, PluginInstance.Main, null);
                             } else if (message.IndexOf("repeat", StringComparison.CurrentCultureIgnoreCase) >= 0) {
                                 var repeat = message.Replace("REPEAT:", "");
+                                VariableManager.SetValue("wnp_repeat", (repeat == "2" || repeat == "1"), VariableType.Bool, PluginInstance.Main, null);
                                 VariableManager.SetValue("wnp_repeatall", (repeat == "2"), VariableType.Bool, PluginInstance.Main, null);
                                 VariableManager.SetValue("wnp_repeatone", (repeat == "1"), VariableType.Bool, PluginInstance.Main, null);
                             } else if (message.IndexOf("shuffle", StringComparison.CurrentCultureIgnoreCase) >= 0) {

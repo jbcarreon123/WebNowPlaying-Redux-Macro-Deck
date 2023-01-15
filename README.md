@@ -22,6 +22,7 @@ Interfaces WebNowPlaying to Macro Deck 2
 | Variable | Description | Type |
 | --- | --- | --- |
 | wnp_player | Shows the current player (e.g. YouTube) | String |
+| wnp_is_playing | Shows when a supported site is playing | Boolean |
 | wnp_state | Shows the playing state (0 = stopped, 1 = playing, 2 = paused) | Integer |
 | wnp_title | Shows the title of the current track | String |
 | wnp_artist | Shows the artist(s) of the current track | String |
@@ -29,7 +30,9 @@ Interfaces WebNowPlaying to Macro Deck 2
 | wnp_duration | Shows the duration of the current track | String |
 | wnp_position | Shows the current position of the current track | String |
 | wnp_volume | Shows the volume percentage | Float |
-| wnp_repeat | Shows when the repeat is turned on (1), off (0), or single track (2) | Integer |
+| wnp_repeat | Shows when the repeat is turned on or off | Boolean |
+| wnp_repeatall | Shows when the repeat is on all tracks | Boolean |
+| wnp_repeatone | Shows when the repeat is on single track mode | Boolean |
 | wnp_shuffle | Shows when the shuffle is turned on or off | Integer |
 
 ### This is a plugin for [Macro Deck 2](https://github.com/SuchByte/Macro-Deck), it does NOT function as a standalone app
