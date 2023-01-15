@@ -21,6 +21,8 @@ namespace jbcarreon123.WebNowPlayingPlugin.Actions
 
         public override bool CanConfigure => false;
 
+        public override string BindableVariable => "wnp_is_playing";
+
         public override void Trigger(string clientId, ActionButton actionButton)
         {
             Main.socket.Send("playpause");
