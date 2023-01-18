@@ -6,6 +6,7 @@
     <RootNamespace>jbcarreon123.WebNowPlayingPlugin</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
     <Platforms>AnyCPU;x86</Platforms>
+    <Version>1.1.0-dev-1</Version>
   </PropertyGroup>
 
   <ItemGroup>
