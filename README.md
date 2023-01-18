@@ -43,3 +43,4 @@ This plugin uses some awesome 3rd party libraries:
 - [Fleck](https://github.com/statianzo/Fleck)
 - [WebNowPlaying](https://github.com/tjhrulz/WebNowPlaying)
 - [WebNowPlaying Companion](https://github.com/tjhrulz/WebNowPlaying-BrowserExtension)
+- [Websocket Client (unused for current version)](https://github.com/Marfusios/websocket-client)
