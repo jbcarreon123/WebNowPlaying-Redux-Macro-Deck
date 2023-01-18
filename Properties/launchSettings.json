@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "jbcarreon123.WebNowPlayingPlugin": {
+      "commandName": "Project"
+    },
+    "MD2": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\Macro Deck\\Macro Deck 2.exe",
+      "commandLineArgs": "--debug-console"
+    }
+  }
+}

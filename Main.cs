@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading; 
 using System.Drawing;
 using System.Windows.Forms;
+using Websocket.Client;
 using jbcarreon123.WebNowPlayingPlugin.Actions;
 using SuchByte.MacroDeck.Plugins;
 using SuchByte.MacroDeck.Variables;
@@ -9,6 +11,7 @@ using System.Collections.Generic;
 using SuchByte.MacroDeck.Logging;
 using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.GUI.CustomControls;
+using System.Net.WebSockets;
 
 namespace jbcarreon123.WebNowPlayingPlugin
 {
@@ -22,6 +25,7 @@ namespace jbcarreon123.WebNowPlayingPlugin
     {
         public static Main Instance;
         public static int wsclientcount = 0;
+        public override bool CanConfigure => true;
         public static IWebSocketConnection socket { get; internal set; }
 
         public Main()
@@ -30,10 +34,18 @@ namespace jbcarreon123.WebNowPlayingPlugin
             PluginInstance.Main = this;
         }
 
+        public override void OpenConfigurator()
+        {
+            Config.Config config = new Config.Config();
+            config.ShowDialog();
+        }
+
         public override void Enable()
         {
             Instance ??= this;
-            this.Actions = new List<PluginAction>
+            try {
+                OpenWS();
+                this.Actions = new List<PluginAction>
             {
                 new PlayPauseAction(),
                 new PreviousAction(),
@@ -41,8 +53,10 @@ namespace jbcarreon123.WebNowPlayingPlugin
                 new ShuffleAction(),
                 new RepeatAction()
             };
+            } catch (Exception e) {
+                MacroDeckLogger.Error(this, $"There is a error.\r\n{e}");
+            }
             // MacroDeckLogger.Info(this, $"Finished loading WebNowPlaying Plugin ({stp.ElapsedMilliseconds}ms)");
-            OpenWS();
         }
 
         public bool StringToBoolean(string value) {
@@ -55,10 +69,12 @@ namespace jbcarreon123.WebNowPlayingPlugin
 
         public void OpenWS()
         {
-            var server = new WebSocketServer("ws://0.0.0.0:8974");
-            server.Start(socket =>
+            try
+            {
+                var server = new WebSocketServer($"ws://0.0.0.0:{PluginConfiguration.GetValue(this, "port")}");
+                server.Start(socket =>
                 {
-                    Main.socket = socket;
+                    Main.socket = socket; 
                     socket.OnMessage = message => {
                         if (!(message.IndexOf("error", StringComparison.CurrentCultureIgnoreCase) >= 0)) {
                             if (message.IndexOf("title", StringComparison.CurrentCultureIgnoreCase) >= 0) {
@@ -87,6 +103,12 @@ namespace jbcarreon123.WebNowPlayingPlugin
                                 VariableManager.SetValue("wnp_duration", message.Replace("DURATION:", ""), VariableType.String, PluginInstance.Main, null);
                             }
                         }
+                        /*
+                        if (Convert.ToBoolean(PluginConfiguration.GetValue(this, "passThrough")))
+                        {
+                            //SendMsg(message);
+                        }
+                        */
                     };
                     socket.OnOpen = () => {
                         socket.Send("Version:0.5.0.0");
@@ -97,8 +119,11 @@ namespace jbcarreon123.WebNowPlayingPlugin
                         wsclientcount--;
                         MacroDeckLogger.Trace(PluginInstance.Main, "A websocket client was disconnected.");
                     };
-                }
-            );
+                    }
+                );
+            } catch (Exception e) {
+                throw new ConnectionNotAvailableException(e.Message);
+            }
         }
     }
 }
