@@ -3,8 +3,8 @@
   "name": "WebNowPlaying Plugin",
   "author": "jbcarreon123",
   "packageId": "jbcarreon123.WebNowPlayingPlugin",
-  "version": "1.1.0-dev-1",
+  "version": "2.0.0",
   "target-plugin-api-version": 35,
-  "repository" : "https://github.com/jbcarreon123/MacroDeck2-WebNowPlayingPlugin",
+  "repository" : "https://github.com/jbcarreon123/WebNowPlaying-Redux-Macro-Deck",
   "dll": "WebNowPlaying Plugin.dll"
  }
