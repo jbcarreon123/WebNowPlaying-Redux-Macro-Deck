@@ -10,6 +10,7 @@ using System.Text;
 using SuchByte.MacroDeck.Logging;
 using SuchByte.MacroDeck;
 using jbcarreon123.WebNowPlayingPlugin;
+using WNPReduxAdapterLibrary;
 
 namespace jbcarreon123.WebNowPlayingPlugin.Actions
 {
@@ -23,7 +24,10 @@ namespace jbcarreon123.WebNowPlayingPlugin.Actions
 
         public override void Trigger(string clientId, ActionButton actionButton)
         {
-            Main.socket.Send("previous");
+            if (PluginConfiguration.GetValue(PluginInstance.Main, "mode") == "Normal")
+                Main.socket.Send("previous");
+            else
+                WNPRedux.mediaEvents.Previous();
         }
     }
 }
