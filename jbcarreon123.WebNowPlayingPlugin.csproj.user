@@ -4,11 +4,14 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>MD2</ActiveDebugProfile>
+    <ActiveDebugProfile>jbcarreon123.WebNowPlayingPlugin</ActiveDebugProfile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="Config\Config.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="StatusIcon.cs">
+      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
 </Project>
