@@ -1,12 +1,15 @@
 # WebNowPlaying Plugin for Macro Deck 2
-Interfaces WebNowPlaying to Macro Deck 2
+Interfaces WebNowPlaying to Macro Deck 2! Now with WebNowPlaying Redux support!
 
-## Notes
-- You need to install the **WebNowPlaying Companion** extension on [Chrome Web Store](https://chrome.google.com/webstore/detail/webnowplaying-companion/jfakgfcdgpghbbefmdfjkbdlibjgnbli) or on [Firefox Addons Store](https://addons.mozilla.org/en-US/firefox/addon/webnowplaying-companion/).
-- You need to either close Rainmeter, disable WebNowPlaying Rainmeter Plugin or uninstall WebNowPlaying Rainmeter Plugin.
+## Supported Extensions
+### WebNowPlaying Companion / Spicetify
+**NOW DEPECTATED! PLEASE USE WEBNOWPLAYING REDUX FOR BROWSERS!!!**   
+Spicetify is still supported. Go to [this](https://spicetify.app/docs/advanced-usage/extensions/#web-now-playing) for instructions to how to enable it.
+### WebNowPlaying Redux
+The default and it is recommended to use this.
+https://github.com/keifufu/WebNowPlaying-Redux
 
 ## Future Additions
-- Passthrough mode *(so both MD2 and Rainmeter can get and process the data)*
 - Status indicator
 
 ## Features
@@ -34,6 +37,7 @@ Interfaces WebNowPlaying to Macro Deck 2
 | wnp_repeatall | Shows when the repeat is on all tracks | Boolean |
 | wnp_repeatone | Shows when the repeat is on single track mode | Boolean |
 | wnp_shuffle | Shows when the shuffle is turned on or off | Boolean |
+| wnp_position_percent | Shows the position percentage [Only on WNP Redux Mode] | Float |
 
 ### This is a plugin for [Macro Deck 2](https://github.com/SuchByte/Macro-Deck), it does NOT function as a standalone app
 <img height="64px" src="https://macrodeck.org/images/macro_deck_2_official_plugin.png" />
@@ -43,4 +47,5 @@ This plugin uses some awesome 3rd party libraries:
 - [Fleck](https://github.com/statianzo/Fleck)
 - [WebNowPlaying](https://github.com/tjhrulz/WebNowPlaying)
 - [WebNowPlaying Companion](https://github.com/tjhrulz/WebNowPlaying-BrowserExtension)
+- [WebNowPlaying Redux Adapter Library](https://github.com/keifufu/WNPRedux-Adapter-Library)
 - [Websocket Client (unused for current version)](https://github.com/Marfusios/websocket-client)
