@@ -54,7 +54,7 @@ namespace jbcarreon123.WebNowPlayingPlugin
         {
             var assembly = Assembly.GetExecutingAssembly().GetName().Version;
             string version = $"{assembly.Major}.{assembly.Minor}.{assembly.Build}";
-            WNPRedux.Initialize(8195, version, Logger);
+            WNPRedux.Initialize(8698, version, Logger);
 
             var worker = new BackgroundWorker();
             worker.DoWork += worker_DoWork;
