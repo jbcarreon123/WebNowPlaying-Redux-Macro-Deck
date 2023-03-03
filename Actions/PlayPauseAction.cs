@@ -26,10 +26,7 @@ namespace jbcarreon123.WebNowPlayingPlugin.Actions
 
         public override void Trigger(string clientId, ActionButton actionButton)
         {
-            if (PluginConfiguration.GetValue(PluginInstance.Main, "mode") == "Normal")
-                Main.socket.Send("playpause");
-            else
-                WNPRedux.mediaEvents.TogglePlaying();
+            WNPRedux.mediaEvents.TogglePlaying();
         }
     }
 }

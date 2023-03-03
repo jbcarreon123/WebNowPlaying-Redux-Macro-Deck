@@ -18,16 +18,13 @@ namespace jbcarreon123.WebNowPlayingPlugin.Actions
     {
         public override string Name => "Next";
 
-        public override string Description => "Nexts the track";
+        public override string Description => "Next track";
 
         public override bool CanConfigure => false;
 
         public override void Trigger(string clientId, ActionButton actionButton)
         {
-            if (PluginConfiguration.GetValue(PluginInstance.Main, "mode") == "Normal")
-                Main.socket.Send("next");
-            else
-                WNPRedux.mediaEvents.Next();
+            WNPRedux.mediaEvents.Next();
         }
     }
 }
