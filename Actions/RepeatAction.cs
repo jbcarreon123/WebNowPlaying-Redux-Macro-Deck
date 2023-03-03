@@ -1,15 +1,5 @@
 using SuchByte.MacroDeck.ActionButton;
-using SuchByte.MacroDeck.GUI;
-using SuchByte.MacroDeck.GUI.CustomControls;
 using SuchByte.MacroDeck.Plugins;
-using SuchByte.MacroDeck.Variables;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using SuchByte.MacroDeck.Logging;
-using SuchByte.MacroDeck;
-using jbcarreon123.WebNowPlayingPlugin;
 using WNPReduxAdapterLibrary;
 
 namespace jbcarreon123.WebNowPlayingPlugin.Actions
@@ -18,7 +8,7 @@ namespace jbcarreon123.WebNowPlayingPlugin.Actions
     {
         public override string Name => "Repeat";
 
-        public override string Description => "Turn on repeat";
+        public override string Description => "Toggle repeat";
 
         public override bool CanConfigure => false;
 
@@ -26,10 +16,7 @@ namespace jbcarreon123.WebNowPlayingPlugin.Actions
 
         public override void Trigger(string clientId, ActionButton actionButton)
         {
-            if (PluginConfiguration.GetValue(PluginInstance.Main, "mode") == "Normal")
-                Main.socket.Send("repeat");
-            else
-                WNPRedux.mediaEvents.ToggleRepeat();
+            WNPRedux.mediaEvents.ToggleRepeat();
         }
     }
 }
