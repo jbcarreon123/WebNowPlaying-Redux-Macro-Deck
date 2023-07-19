@@ -24,7 +24,10 @@ namespace jbcarreon123.WebNowPlayingPlugin.Actions
 
         public override void Trigger(string clientId, ActionButton actionButton)
         {
-            WNPRedux.mediaEvents.Previous();
+            if (WNPRedux.MediaInfo.Controls.SupportsSkipPrevious)
+            {
+                WNPRedux.MediaInfo.Controls.TrySkipPrevious();   
+            }
         }
     }
 }

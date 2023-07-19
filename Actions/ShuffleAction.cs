@@ -16,7 +16,10 @@ namespace jbcarreon123.WebNowPlayingPlugin.Actions
 
         public override void Trigger(string clientId, ActionButton actionButton)
         {
-            WNPRedux.mediaEvents.ToggleShuffle();
+            if (WNPRedux.MediaInfo.Controls.SupportsToggleShuffleActive)
+            {
+                WNPRedux.MediaInfo.Controls.TryToggleShuffleActive();   
+            }
         }
     }
 }

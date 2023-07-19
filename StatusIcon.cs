@@ -1,62 +1,74 @@
 using System;
+using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 using jbcarreon123.WebNowPlayingPlugin.Properties;
 using SuchByte.MacroDeck;
+using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.GUI.CustomControls;
+using SuchByte.MacroDeck.Logging;
+using WNPReduxAdapterLibrary;
 
 namespace jbcarreon123.WebNowPlayingPlugin
 {
     public class StatusIcon : ContentSelectorButton
     {
-        /*
+        private ContentSelectorButton statusButton = new ContentSelectorButton();
+        private MainWindow mainWindow;
         private readonly ToolTip _statusToolTip;
-        private bool? isConnected;
         private readonly Main main = new Main();
 
         public StatusIcon()
         {
             _statusToolTip = new ToolTip();
-            UpdateStatusButton();
-            Click += StatusButton_Click;
+
+            MacroDeck.OnMainWindowLoad += MacroDeck_OnMainWindowLoad;
+        }
+
+        private void MacroDeck_OnMainWindowLoad(object sender, EventArgs e)
+        {
+            mainWindow = sender as MainWindow;
             
-            MacroDeck.MainWindow.FormClosed += MainWindow_FormClosed;
+            bool connected = WNPRedux.clients > 0;
+
+            this.statusButton = new ContentSelectorButton
+            {
+                BackgroundImage = WNPRedux.clients > 0 ? Properties.Resources.wnp_companion : Properties.Resources.wnp_nocompanion,
+                BackgroundImageLayout = ImageLayout.Stretch,
+
+            };
+            var assembly = Assembly.GetExecutingAssembly().GetName().Version;
+            string version = $"{assembly.Major}.{assembly.Minor}.{assembly.Build}";
+            string isnativeapi = WNPRedux.isUsingNativeAPIs
+                ? "\r\nUsing Native APIs"
+                : "";
+            var toolip = connected
+                ? $"WebNowPlaying Redux {version}\r\n{WNPRedux.clients} connected{isnativeapi}"
+                : $"WebNowPlaying Redux {version}\r\nNo clients connected at this time";
+            _statusToolTip.SetToolTip(statusButton, toolip);
+            
+            mainWindow.contentButtonPanel.Controls.Add(statusButton);
         }
 
-        private void StatusButton_Click(object sender, EventArgs e)
-        {
-            if (PluginInstance.Main.CanConfigure) PluginInstance.Main.OpenConfigurator();
-        }
-
-        private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            main.WSCChanged -= WNP_Polling;
-        }
-
-        private void WNP_Polling(object sender, EventArgs e)
-        {
-            UpdateStatusButton();
-        }
-
-        private void UpdateStatusButton()
+        public void UpdateStatusButton(bool connected)
         {
             try
             {
-                bool connected = PluginInstance.Main.IsClientConnected();
-
-                if (isConnected is null || isConnected != connected)
-                {
-                    isConnected = connected;
-                    BackgroundImage = connected ? Resources.wnp_companion : Resources.wnp_nocompanion;
-                    var toolip = connected
-                        ? $"WebNowPlaying :: {Main.wsclientcount}"
-                        : "WebNowPlaying :: No clients connected";
-                    _statusToolTip.SetToolTip(this, toolip);
-                }
+                var assembly = Assembly.GetExecutingAssembly().GetName().Version;
+                string version = $"{assembly.Major}.{assembly.Minor}.{assembly.Build}";
+                string isnativeapi = WNPRedux.isUsingNativeAPIs
+                        ? "\r\nUsing Native APIs"
+                        : "";
+                var toolip = connected
+                    ? $"WebNowPlaying Redux {version}\r\n{WNPRedux.clients} connected{isnativeapi}"
+                    : $"WebNowPlaying Redux {version}\r\nNo clients connected at this time";
+                statusButton.BackgroundImage = connected ? Resources.wnp_companion : Resources.wnp_nocompanion;;
+                _statusToolTip.SetToolTip(statusButton, toolip);
             }
-            catch
+            catch (Exception e)
             {
+                MacroDeckLogger.Warning(PluginInstance.Main, $"{e}");
             }  
         }
-        */
     }
 }
