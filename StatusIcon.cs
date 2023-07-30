@@ -43,8 +43,8 @@ namespace jbcarreon123.WebNowPlayingPlugin
                 ? "\r\nUsing Native APIs"
                 : "";
             var toolip = connected
-                ? $"WebNowPlaying Redux {version}\r\n{WNPRedux.clients} connected{isnativeapi}"
-                : $"WebNowPlaying Redux {version}\r\nNo clients connected at this time";
+                ? $"WebNowPlaying Plugin {version}\r\n{WNPRedux.clients} connected{isnativeapi}"
+                : $"WebNowPlaying Plugin {version}\r\nNo clients connected at this time";
             _statusToolTip.SetToolTip(statusButton, toolip);
             
             mainWindow.contentButtonPanel.Controls.Add(statusButton);
