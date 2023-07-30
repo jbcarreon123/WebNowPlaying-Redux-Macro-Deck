@@ -17,6 +17,9 @@ using System.IO;
 using System;
 using WNPReduxAdapterLibrary;
 
+// This file is from the Rainmeter Plugin for WebNowPlaying Redux.
+// Note that this is spotty at best.
+
 namespace jbcarreon123.WebNowPlayingPlugin
 {
   public class WNPReduxNative
