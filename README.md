@@ -2,10 +2,15 @@
 Interfaces WebNowPlaying to Macro Deck 2! Now with WebNowPlaying Redux support!
 
 ## Supported Extensions
-### WebNowPlaying Redux
+### WebNowPlaying Redux (browser extension)
 The default and it is recommended to use this.
 https://github.com/keifufu/WebNowPlaying-Redux
-### WNP Companion / Spicetify
+### Desktop Media Players
+WebNowPlaying Plugin supports Native APIs. Enable it on the extension settings.
+### Spicetify (WNP Redux)
+Supported, but depectated.  
+Macro Deck 2 is not supposed to run on Linux, so...
+### WNP Companion / Spicetify (Legacy)
 It is now depectated and it is no longer available.
 
 ## Documentation
