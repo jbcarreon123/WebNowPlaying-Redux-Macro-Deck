@@ -14,7 +14,7 @@ Macro Deck 2 is not supposed to run on Linux, so...
 It is now depectated and it is no longer available.
 
 ## Documentation
-https://jbcarreon123.github.io/docs/#/md2/wnpl
+https://jbcarreon123.gitbook.io/docs/md2/webnowplaying-plugin
 
 ## Future Additions
 - Status indicator
