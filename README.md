@@ -16,9 +16,6 @@ It is now depectated and it is no longer available.
 ## Documentation
 https://jbcarreon123.github.io/docs/md2/wnpl
 
-## Future Additions
-- Status indicator
-
 ## Features
 | Action | Description |
 | --- | --- |
