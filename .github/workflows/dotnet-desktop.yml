@@ -1,0 +1,34 @@
+name: Build and Publish Extension
+
+on: [ push ] 
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 7.x
+      - name: Get Latest Release
+        id: get_release
+        run: |
+          latest_release=$(curl -s "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest" | jq -r .tag_name)
+          echo "Latest release: $latest_release"
+          echo "::set-output name=latest_release::$latest_release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check Version
+        run: |
+          latest_release="${{ steps.get_release.outputs.latest_release }}"
+          if [ "${{ steps.get_release.outputs.latest_release }}" = "${{ github.ref }}" ]; then
+            echo "Version already exists. Skipping build and publish."
+            exit
+          fi
+        shell: bash
+      - name: Build Plugin
+        run: |
+          dotnet publish -r=windows-x64 jbcarreon123.WebNowPlayingPlugin.sln
+          
