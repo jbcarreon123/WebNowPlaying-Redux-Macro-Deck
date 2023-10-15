@@ -7,7 +7,7 @@
     <RootNamespace>jbcarreon123.WebNowPlayingPlugin</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
     <Platforms>AnyCPU;x86</Platforms>
-    <Version>3.1.0</Version>
+    <Version>3.2.0</Version>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Authors>jbcarreon123</Authors>
     <Company />
