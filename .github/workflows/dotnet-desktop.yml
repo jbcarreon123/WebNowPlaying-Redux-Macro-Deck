@@ -41,4 +41,19 @@ jobs:
       - name: Publish Plugin
         if: steps.already-published.outputs.is_it == 'false' && github.ref == 'refs/heads/master'
         run: |
-          echo "publishing"
+          cd jbcarreon123.WebNowPlayingPlugin/bin/Release/net5.0/publish
+          zip -r WNPl.zip .
+          mv WNPl.zip $GITHUB_WORKSPACE
+          mv jbcarreon123.WebNowPlayingPlugin.dll $GITHUB_WORKSPACE
+        shell: bash
+      - name: Create and publish Release
+        if: steps.already-published.outputs.is_it == 'false' && github.ref == 'refs/heads/master'
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ${{ github.workspace }}/WNPl.zip
+            ${{ github.workspace }}/jbcarreon123.WebNowPlayingPlugin.dll
+          token: ${{ secrets.GH_TOKEN }}
+          tag_name: ${{ steps.version.outputs.project_version }}
+          name: Release ${{ steps.version.outputs.project_version }}
