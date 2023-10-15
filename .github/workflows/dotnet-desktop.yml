@@ -35,7 +35,7 @@ jobs:
         id: already-published
         shell: bash
       - name: Build Plugin
-        if: ${{ steps.already-published.outputs.is_it == 'true' }}
+        if: ${{ steps.already-published.outputs.is_it == 'false' }}
         run: |
           dotnet publish -r=windows-x64 jbcarreon123.WebNowPlayingPlugin.sln
           
