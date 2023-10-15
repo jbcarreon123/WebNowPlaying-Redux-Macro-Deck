@@ -18,10 +18,15 @@ jobs:
           repository: jbcarreon123/WebNowPlaying-Redux-Macro-Deck
           releases-only: true
         id: wnpmd
-      - name: Check Version
+      - name: Get .csproj version
+        id: version
         run: |
-          latest_release="${{ steps.wnpmd.outputs.tag }}"
-          if [ "${{ steps.wnpmd.outputs.tag }}" = "${{ github.ref }}" ]; then
+          [xml]$csproj = Get-Content -Path 'your-project.csproj'
+          $version = $csproj.Project.PropertyGroup.Version
+          echo "::set-output name=project_version::$version"
+      - name: Check if it's already published
+        run: |
+          if [ "${{ steps.wnpmd.outputs.tag }}" = "${{ steps.version.outputs.project_version }}" ]; then
             echo "Version already exists. Skipping build and publish."
             exit
           fi
