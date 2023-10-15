@@ -21,7 +21,7 @@ jobs:
       - name: Get .csproj version
         id: version
         run: |
-          [xml]$csproj = Get-Content -Path 'your-project.csproj'
+          [xml]$csproj = Get-Content -Path 'jbcarreon123.WebNowPlayingPlugin.csproj'
           $version = $csproj.Project.PropertyGroup.Version
           echo "::set-output name=project_version::$version"
       - name: Check if it's already published
