@@ -37,7 +37,7 @@ jobs:
       - name: Build Plugin
         if: ${{ steps.already-published.outputs.is_it == 'false' }}
         run: |
-          dotnet publish -r=windows-x64 jbcarreon123.WebNowPlayingPlugin.sln
+          dotnet publish -r=win-x64 jbcarreon123.WebNowPlayingPlugin.sln
       - name: Publish Plugin
         if: steps.already-published.outputs.is_it == 'false' && github.ref == 'refs/heads/master'
         run: |
@@ -56,4 +56,4 @@ jobs:
             ${{ github.workspace }}/jbcarreon123.WebNowPlayingPlugin.dll
           token: ${{ secrets.GH_TOKEN }}
           tag_name: ${{ steps.version.outputs.project_version }}
-          name: Release ${{ steps.version.outputs.project_version }}
+          name: WebNowPlaying Plugin ${{ steps.version.outputs.project_version }}
