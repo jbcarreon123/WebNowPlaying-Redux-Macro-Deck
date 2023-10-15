@@ -20,8 +20,8 @@ jobs:
         id: wnpmd
       - name: Check Version
         run: |
-          latest_release="${{ steps.octokit.outputs.tag }}"
-          if [ "${{ steps.octokit.outputs.tag }}" = "${{ github.ref }}" ]; then
+          latest_release="${{ steps.wnpmd.outputs.tag }}"
+          if [ "${{ steps.wnpmd.outputs.tag }}" = "${{ github.ref }}" ]; then
             echo "Version already exists. Skipping build and publish."
             exit
           fi
