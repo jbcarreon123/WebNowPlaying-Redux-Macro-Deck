@@ -28,10 +28,14 @@ jobs:
         run: |
           if [ "${{ steps.wnpmd.outputs.tag }}" = "${{ steps.version.outputs.project_version }}" ]; then
             echo "Version already exists. Skipping build and publish."
+            echo "::set-output name=is_it::true"
             exit
           fi
+          echo "::set-output name=is_it::false"
+        id: already-published
         shell: bash
       - name: Build Plugin
+        if: ${{ steps.already-published.outputs.is_it == 'true' }}
         run: |
           dotnet publish -r=windows-x64 jbcarreon123.WebNowPlayingPlugin.sln
           
