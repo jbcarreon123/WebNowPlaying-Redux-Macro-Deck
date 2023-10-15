@@ -12,18 +12,16 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 7.x
-      - name: Get Latest Release
-        id: get_release
-        run: |
-          latest_release=$(gh release view latest -R $GITHUB_REPOSITORY --json tag_name --jq .tag_name)
-          echo "Latest release: $latest_release"
-          echo "::set-output name=latest_release::$latest_release"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Find latest tag
+        uses: oprypin/find-latest-tag@v1
+        with:
+          repository: jbcarreon123/WebNowPlaying-Redux-Macro-Deck
+          releases-only: true
+        id: wnpmd
       - name: Check Version
         run: |
-          latest_release="${{ steps.get_release.outputs.latest_release }}"
-          if [ "${{ steps.get_release.outputs.latest_release }}" = "${{ github.ref }}" ]; then
+          latest_release="${{ steps.octokit.outputs.tag }}"
+          if [ "${{ steps.octokit.outputs.tag }}" = "${{ github.ref }}" ]; then
             echo "Version already exists. Skipping build and publish."
             exit
           fi
