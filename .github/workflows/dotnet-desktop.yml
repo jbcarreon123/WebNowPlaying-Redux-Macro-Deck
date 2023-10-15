@@ -38,4 +38,7 @@ jobs:
         if: ${{ steps.already-published.outputs.is_it == 'false' }}
         run: |
           dotnet publish -r=windows-x64 jbcarreon123.WebNowPlayingPlugin.sln
-          
+      - name: Publish Plugin
+        if: github.ref == 'refs/heads/master' && ${{ steps.already-published.outputs.is_it == 'false' }}
+        run: |
+          echo "publishing"
