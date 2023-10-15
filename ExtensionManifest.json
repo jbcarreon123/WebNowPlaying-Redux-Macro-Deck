@@ -5,6 +5,8 @@
   "packageId": "jbcarreon123.WebNowPlayingPlugin",
   "version": "2.1.0",
   "target-plugin-api-version": 35,
+  "target-macro-deck-version" : "2.13.0-b9",
   "repository" : "https://github.com/jbcarreon123/WebNowPlaying-Redux-Macro-Deck",
-  "dll": "WebNowPlaying Plugin.dll"
- }
+  "dll": "WebNowPlaying Plugin.dll",
+  "author-discord-userid": "908002848967626842"
+}
