@@ -14,10 +14,6 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 7.x
       - name: Find latest tag
         uses: oprypin/find-latest-tag@v1
         with:
@@ -42,24 +38,21 @@ jobs:
         shell: bash
       - name: Build Plugin
         if: ${{ steps.already-published.outputs.is_it == 'false' }}
-        run: |
-          dotnet publish -r=win-x64 jbcarreon123.WebNowPlayingPlugin.sln
-      - name: Publish Plugin
-        if: steps.already-published.outputs.is_it == 'false' && github.ref == 'refs/heads/master'
-        run: |
-          cd jbcarreon123.WebNowPlayingPlugin/bin/Release/net5.0/publish
-          zip -r WNPl.zip .
-          mv WNPl.zip $GITHUB_WORKSPACE
-          mv jbcarreon123.WebNowPlayingPlugin.dll $GITHUB_WORKSPACE
-        shell: bash
+        uses: Macro-Deck-App/Actions/build-extension@main
+        with:
+          extension-path: .
+          artifact-name: WNP_PLUGIN_${{ github.event.pull_request.number }}
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.2
+        with:
+          name: WNP_PLUGIN_${{ github.event.pull_request.number }}
       - name: Create and publish Release
         if: steps.already-published.outputs.is_it == 'false' && github.ref == 'refs/heads/master'
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ${{ github.workspace }}/WNPl.zip
-            ${{ github.workspace }}/jbcarreon123.WebNowPlayingPlugin.dll
+            WNP_PLUGIN_${{ github.event.pull_request.number }}.zip
           token: ${{ secrets.GH_TOKEN }}
           tag_name: ${{ steps.version.outputs.project_version }}
           name: WebNowPlaying Plugin ${{ steps.version.outputs.project_version }}
