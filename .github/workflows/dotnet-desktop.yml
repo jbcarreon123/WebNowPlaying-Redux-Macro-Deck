@@ -23,9 +23,7 @@ jobs:
       - name: Get .csproj version
         id: version
         run: |
-          [xml]$csproj = Get-Content -Path 'jbcarreon123.WebNowPlayingPlugin.csproj'
-          $version = $csproj.Project.PropertyGroup.Version
-          echo "::set-output name=project_version::$version"
+          echo "project_version::$(xmllint --xpath 'string(/Project/PropertyGroup/Version)' jbcarreon123.WebNowPlayingPlugin.csproj)"
       - name: Check if it's already published
         run: |
           if [ "${{ steps.wnpmd.outputs.tag }}" = "${{ steps.version.outputs.project_version }}" ]; then
