@@ -23,7 +23,7 @@ jobs:
       - name: Get .csproj version
         id: version
         run: |
-          version=$(dotnet list jbcarreon123.WebNowPlayingPlugin.csproj package --no-build | grep -oP '(?<=Version: )[\d.]+')
+          version=$(python -c "import xml.etree.ElementTree as ET; tree = ET.parse('jbcarreon123.WebNowPlayingPlugin.csproj'); root = tree.getroot(); print(root.find('./PropertyGroup/Version').text)")
           echo "::set-output name=project_version::$version"
       - name: Check if it's already published
         run: |
