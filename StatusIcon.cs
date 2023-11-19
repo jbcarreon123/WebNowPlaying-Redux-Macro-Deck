@@ -11,7 +11,7 @@ using WNPReduxAdapterLibrary;
 
 namespace jbcarreon123.WebNowPlayingPlugin
 {
-    public class StatusIcon : ContentSelectorButton
+    public class StatusIcon
     {
         private ContentSelectorButton statusButton = new ContentSelectorButton();
         private MainWindow mainWindow;
