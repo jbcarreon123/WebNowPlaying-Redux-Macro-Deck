@@ -1,0 +1,57 @@
+name: Build and Publish Extension
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: Find latest tag
+        uses: oprypin/find-latest-tag@v1
+        with:
+          repository: jbcarreon123/WebNowPlaying-Redux-Macro-Deck
+          releases-only: true
+        id: wnpmd
+      - name: Get .csproj version
+        id: version
+        run: |
+          version=$(python -c "import xml.etree.ElementTree as ET; tree = ET.parse('jbcarreon123.WebNowPlayingPlugin.csproj'); root = tree.getroot(); print(root.find('./PropertyGroup/Version').text)")
+          echo "::set-output name=project_version::$version"
+      - name: Check if it's already published
+        run: |
+          if [ "${{ steps.wnpmd.outputs.tag }}" = "${{ steps.version.outputs.project_version }}" ]; then
+            echo "Version already exists. Skipping build and publish."
+            echo "::set-output name=is_it::true"
+            exit
+          fi
+          echo "::set-output name=is_it::false"
+        id: already-published
+        shell: bash
+      - name: Build Plugin
+        if: ${{ steps.already-published.outputs.is_it == 'false' }}
+        uses: Macro-Deck-App/Actions/build-extension@main
+        with:
+          extension-path: .
+          artifact-name: WNP_PLUGIN_${{ github.event.pull_request.number }}
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.2
+        with:
+          name: WNP_PLUGIN_${{ github.event.pull_request.number }}
+      - name: Create and publish Release
+        if: steps.already-published.outputs.is_it == 'false' && github.ref == 'refs/heads/master'
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            WNP_PLUGIN_${{ github.event.pull_request.number }}.zip
+          token: ${{ secrets.GH_TOKEN }}
+          tag_name: ${{ steps.version.outputs.project_version }}
+          name: WebNowPlaying Plugin ${{ steps.version.outputs.project_version }}
